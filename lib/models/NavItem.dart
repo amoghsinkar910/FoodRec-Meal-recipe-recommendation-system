@@ -6,6 +6,7 @@ class NavItem {
   final int id;
   final String icon;
   final Widget destination;
+  
 
   NavItem({this.id, this.icon, this.destination});
 
