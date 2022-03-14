@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/recipe_search/home.dart';
 import 'package:recipe_app/screens/home/home_screen.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 
@@ -39,6 +40,7 @@ class NavItems extends ChangeNotifier {
     NavItem(
       id: 2,
       icon: "assets/icons/search.svg",
+      destination: Home(),
     ),
     NavItem(
       id: 3,
