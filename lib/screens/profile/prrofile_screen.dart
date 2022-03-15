@@ -17,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: BlueColor,
       leading: SizedBox(),
       // On Android it's false by default
       centerTitle: true,

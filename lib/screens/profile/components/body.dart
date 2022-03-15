@@ -21,19 +21,19 @@ class Body extends StatelessWidget {
             title: "Saved Recipes",
             press: () {},
           ),
-          ProfileMenuItem(
-            iconSrc: "assets/icons/chef_color.svg",
-            title: "Super Plan",
-            press: () {},
-          ),
-          ProfileMenuItem(
-            iconSrc: "assets/icons/language.svg",
-            title: "Change Language",
-            press: () {},
-          ),
+          // ProfileMenuItem(
+          //   iconSrc: "assets/icons/chef_color.svg",
+          //   title: "Super Plan",
+          //   press: () {},
+          // ),
+          // ProfileMenuItem(
+          //   iconSrc: "assets/icons/language.svg",
+          //   title: "Change Language",
+          //   press: () {},
+          // ),
           ProfileMenuItem(
             iconSrc: "assets/icons/info.svg",
-            title: "Help",
+            title: "Logout",
             press: () {},
           ),
         ],
