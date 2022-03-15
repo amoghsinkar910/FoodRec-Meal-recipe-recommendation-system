@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/recipe_search/home.dart';
 import 'package:recipe_app/recipe_search/screen/first_screen.dart';
-import 'package:recipe_app/screens/camera_screen/pick_image_screen.dart';
+import 'package:recipe_app/screens/camera_screen/camera_navbar.dart';
 import 'package:recipe_app/screens/home/home_screen.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 
@@ -47,7 +46,7 @@ class NavItems extends ChangeNotifier {
     NavItem(
       id: 3,
       icon: "assets/icons/camera.svg",
-      destination: ImagePickPage(),
+      destination: CameraScreen(),
     ),
     // NavItem(
     //   id: 4,
