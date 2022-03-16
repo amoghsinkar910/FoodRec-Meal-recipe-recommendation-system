@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/models/RecipeBundel.dart';
+import 'package:recipe_app/screens/home/recipe_click_screen.dart';
 import 'package:recipe_app/size_config.dart';
 
 import 'categories.dart';
@@ -30,7 +31,11 @@ class Body extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => RecipeBundelCard(
                   recipeBundle: recipeBundles[index],
-                  press: () {},
+                  press: () {
+                    //routing
+                    Navigator.push(context, 
+                      MaterialPageRoute(builder: (context) => RecipeDisplay()));
+                  },
                 ),
               ),
             ),
