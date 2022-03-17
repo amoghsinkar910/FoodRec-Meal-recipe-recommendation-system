@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/size_config.dart';
 
+import '../../login/login_screen.dart';
 import 'info.dart';
 import 'profile_menu_item.dart';
 
@@ -34,7 +36,12 @@ class Body extends StatelessWidget {
           ProfileMenuItem(
             iconSrc: "assets/icons/info.svg",
             title: "Logout",
-            press: () {},
+            press: () async{
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context)=>LoginScreen())
+                  );
+            },
           ),
         ],
       ),

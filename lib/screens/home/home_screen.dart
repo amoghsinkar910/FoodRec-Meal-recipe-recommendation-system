@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:recipe_app/components/my_bottom_nav_bar.dart';
 import 'package:recipe_app/screens/home/components/body.dart';
+import 'package:recipe_app/screens/login/login_screen.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 import 'package:recipe_app/size_config.dart';
 
@@ -54,6 +57,15 @@ class HomeScreen extends StatelessWidget {
                 title: const Text("Contact us"),
                 onTap:(){
                   Navigator.pop(context);
+                } ,
+              ),
+              ListTile(
+                title: const Text("Logout"),
+                onTap:()async{
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context)=>LoginScreen())
+                  );
                 } ,
               ),
           ],    
