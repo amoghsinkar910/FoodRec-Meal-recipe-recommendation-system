@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_app/constants.dart';
 import 'package:recipe_app/models/NavItem.dart';
@@ -6,7 +7,9 @@ import 'package:recipe_app/screens/home/home_screen.dart';
 import 'package:recipe_app/screens/login/login_screen.dart';
 import 'package:splashscreen/splashscreen.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

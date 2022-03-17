@@ -34,6 +34,10 @@ dependencies:
   flutter_svg: ^0.20.0-nullsafety.3
   image_picker: ^0.8.4+11
   splashscreen:
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.8
+  cloud_firestore: ^3.1.10
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
