@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_app/constants.dart';
 import 'package:recipe_app/models/NavItem.dart';
 import 'package:recipe_app/screens/home/home_screen.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +25,16 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(color: Colors.white, elevation: 0),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomeScreen(),
+        home: SplashScreen(
+        seconds: 4,
+        navigateAfterSeconds:HomeScreen(),
+        image: new Image.asset('assets/images/logo.png'),
+        photoSize: 200.0,        
+        backgroundColor: Colors.white,
+        styleTextUnderTheLoader: new TextStyle(),
+        loadingText: const Text("Loading..."),
+        loaderColor: Colors.green,
+      ),
       ),
     );
   }
