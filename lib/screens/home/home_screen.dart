@@ -8,6 +8,7 @@ import 'package:recipe_app/screens/login/login_screen.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 import 'package:recipe_app/size_config.dart';
 
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
