@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipe_app/screens/camera_screen/obj_detection.dart';
+import 'package:tflite/tflite.dart';
 
 class ImagePickPage extends StatefulWidget {
   
@@ -12,6 +14,50 @@ class ImagePickPage extends StatefulWidget {
 class _ImagePickPageState extends State<ImagePickPage> {
 
   File imageFile;
+  bool _loading = true;
+  File image;
+  List _output;
+
+  @override
+  void initState(){
+    super.initState();
+    loadModel().then((value){
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() async{
+    //dis function disposes and clears our memory
+    super.dispose();
+    await Tflite.close();
+  }
+
+  classifyImage(File image) async {
+    //this function runs the model on the image
+    var output = await Tflite.detectObjectOnImage(
+      path: image.path,
+      model: "YOLO",
+      imageMean: 127.5,     
+      imageStd: 127.5,      
+      asynch: true  
+    );
+    print("####################");
+    print(output);
+    setState(() {
+      _output = output;
+      _loading = false;
+    });
+    //getOutput();
+  }
+
+  loadModel () async{
+    await Tflite.loadModel(
+      model: 'assets/models/synfruits/fruit_model.tflite',
+      labels: 'assets/models/synfruits/image_labels.txt',
+      );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +73,7 @@ class _ImagePickPageState extends State<ImagePickPage> {
           children: [
             if(imageFile!=null)
               Container(
-                height: 480,
+                height: 380,
                 width: 600,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -77,13 +123,21 @@ class _ImagePickPageState extends State<ImagePickPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: (){
-                      
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context)=>TextInputScreen(_output))
+                      );
                     }, 
                   child: const Text("Next", style: TextStyle(fontSize: 18),)
                   ),
                 ),
               ],
-            )
+            ),
+            Expanded(child: Text(
+              'output',style: TextStyle(fontSize: 20, color: Colors.black),
+              )
+            ),
+            //Text('The ingredients in the image are ${_output[0]['detectedClass']}')),
           ],
         ),
       ),
@@ -94,7 +148,7 @@ class _ImagePickPageState extends State<ImagePickPage> {
 
     final file = await ImagePicker().pickImage(
       source: Source,
-      maxHeight: 480,
+      maxHeight: 380,
       maxWidth: 600,
       imageQuality: 70,
       );
@@ -103,7 +157,13 @@ class _ImagePickPageState extends State<ImagePickPage> {
       setState(() {
         imageFile = File(file.path);
       });
+      classifyImage(imageFile);
     }
+  }
+
+  void getOutput(){
+    print("########################################");
+    print(_output);
   }
 }
 
