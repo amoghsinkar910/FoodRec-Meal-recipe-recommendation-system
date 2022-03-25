@@ -169,7 +169,9 @@ class _TfliteHomeState extends State<TfliteHome> {
         print("##############################");
         print(re['detectedClass']);
         print(re['detectedClass'].runtimeType);
-      b.add("${re['detectedClass']}");
+        if("${re['detectedClass']}" == "banana" || "${re['detectedClass']}"=="apple" || "${re['detectedClass']}"=="orange"||"${re['detectedClass']}"=="broccoli"||"${re['detectedClass']}"=="carrot"){
+            b.add("${re['detectedClass']}");
+        }
       }).toList();
       print(b);
     }
