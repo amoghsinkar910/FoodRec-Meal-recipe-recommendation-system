@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
+import 'classifierYolov4.dart';
 
 import '../../recipe_search/search.dart';
 
@@ -17,6 +17,7 @@ class TfliteHome extends StatefulWidget {
 }
 
 class _TfliteHomeState extends State<TfliteHome> {
+  Classifier classifier = Classifier();
   String _model = ssd;
   File _image;
 
@@ -66,7 +67,11 @@ class _TfliteHomeState extends State<TfliteHome> {
     setState(() {
       _busy = true;
     });
-    predictImage(File(image.path));
+    final path = image.path;
+    final bytes = await File(path).readAsBytes();
+    final img.Image imagenew = img.decodeImage(bytes);
+    print("##########");
+    print(classifier.predict(imagenew));
   }
 
   selectFromGallery() async {
@@ -76,32 +81,36 @@ class _TfliteHomeState extends State<TfliteHome> {
     setState(() {
       _busy = true;
     });
-    predictImage(File(image.path));
+    final path = image.path;
+    final bytes = await File(path).readAsBytes();
+    final img.Image imagenew = img.decodeImage(bytes);
+    print("##########");
+    print(classifier.predict(imagenew));
   }
 
-  predictImage(File image) async {
-    if (image == null) return;
+  // predictImage(File image) async {
+  //   if (image == null) return;
 
-    if (_model == yolo) {
-      await yolov2Tiny(image);
-    } else {
-      await ssdMobileNet(image);
-    }
+  //   if (_model == yolo) {
+  //     await yolov2Tiny(image);
+  //   } else {
+  //     await ssdMobileNet(image);
+  //   }
 
-    FileImage(image)
-        .resolve(ImageConfiguration())
-        .addListener((ImageStreamListener((ImageInfo info, bool _) {
-          setState(() {
-            _imageWidth = info.image.width.toDouble();
-            _imageHeight = info.image.height.toDouble();
-          });
-        })));
+  //   FileImage(image)
+  //       .resolve(ImageConfiguration())
+  //       .addListener((ImageStreamListener((ImageInfo info, bool _) {
+  //         setState(() {
+  //           _imageWidth = info.image.width.toDouble();
+  //           _imageHeight = info.image.height.toDouble();
+  //         });
+  //       })));
 
-    setState(() {
-      _image = image;
-      _busy = false;
-    });
-  }
+  //   setState(() {
+  //     _image = image;
+  //     _busy = false;
+  //   });
+  // }
 
   yolov2Tiny(File image) async {
     var recognitions = await Tflite.detectObjectOnImage(
