@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 import '../../recipe_search/search.dart';
 
@@ -66,7 +69,24 @@ class _TfliteHomeState extends State<TfliteHome> {
     setState(() {
       _busy = true;
     });
-    predictImage(File(image.path));
+    print(image.path);
+    print("Test");
+    String ext = image.path.split(".").last;
+    print(ext);
+    File imagefile = File(image.path);
+
+    List<int> imageBytes = imagefile.readAsBytesSync();
+    // print(imageBytes);
+    String base64Image = base64Encode(imageBytes);
+    print(base64Image.substring(0, 20));
+    String response = postRequest(ext, base64Image).toString();
+    print("%%%%%%%%%%%%%%%%");
+    print(response);
+    // Image(base64Decode('${response["imString"]}'));
+    final dec = base64Decode(response);
+    var file = File("temp.jpg");
+    file.writeAsBytes(dec);
+    Image.file(file);
   }
 
   selectFromGallery() async {
@@ -76,7 +96,24 @@ class _TfliteHomeState extends State<TfliteHome> {
     setState(() {
       _busy = true;
     });
-    predictImage(File(image.path));
+    print("##################");
+    print(image.path);
+    print("Test");
+    String ext = (image.path.split(".").last);
+    print(ext);
+    File imagefile = File(image.path);
+    List<int> imageBytes = imagefile.readAsBytesSync();
+    // print(imageBytes);
+    String base64Image = base64Encode(imageBytes);
+    String response = postRequest(ext, base64Image).toString();
+    print("%%%%%%%%%%%%%%%%");
+    print(response);
+    // Image(base64Decode('${response["imString"]}'));
+    final dec = base64Decode(response);
+    var file = File("temp.jpg");
+    file.writeAsBytes(dec);
+    Image.file(file);
+    // predictImage(File(image.path));
   }
 
   predictImage(File image) async {
@@ -103,6 +140,24 @@ class _TfliteHomeState extends State<TfliteHome> {
     });
   }
 
+  Future<String> postRequest(String ext, String base64) async {
+    print('*****Call to function postRequest*********');
+    String url = 'http://192.168.139.121:5000/detect';
+
+    Map data = {"base64": base64, "type": ext};
+    //encode Map to JSON
+    var body = json.encode(data);
+
+    var response = await http.post(Uri.parse(url),
+        headers: {"Content-Type": "application/json"}, body: body);
+    print("${response.statusCode}");
+    print("${response.body}");
+    Map<String, dynamic> temp = json.decode(response.body);
+    print(temp);
+    print(temp['imString']);
+    return '${temp['imString']}';
+  }
+
   yolov2Tiny(File image) async {
     var recognitions = await Tflite.detectObjectOnImage(
         path: image.path,
@@ -120,7 +175,7 @@ class _TfliteHomeState extends State<TfliteHome> {
   ssdMobileNet(File image) async {
     var recognitions = await Tflite.detectObjectOnImage(
         path: image.path, numResultsPerClass: 1);
-    
+
     print(recognitions);
     setState(() {
       _recognitions = recognitions;
@@ -161,16 +216,19 @@ class _TfliteHomeState extends State<TfliteHome> {
     }).toList();
   }
 
-  List<String> nextWidget(){
-    List<String> b=[];   
-    if(_recognitions!=null)
-    {
+  List<String> nextWidget() {
+    List<String> b = [];
+    if (_recognitions != null) {
       _recognitions.map((re) {
         print("##############################");
         print(re['detectedClass']);
         print(re['detectedClass'].runtimeType);
-        if("${re['detectedClass']}" == "banana" || "${re['detectedClass']}"=="apple" || "${re['detectedClass']}"=="orange"||"${re['detectedClass']}"=="broccoli"||"${re['detectedClass']}"=="carrot"){
-            b.add("${re['detectedClass']}");
+        if ("${re['detectedClass']}" == "banana" ||
+            "${re['detectedClass']}" == "apple" ||
+            "${re['detectedClass']}" == "orange" ||
+            "${re['detectedClass']}" == "broccoli" ||
+            "${re['detectedClass']}" == "carrot") {
+          b.add("${re['detectedClass']}");
         }
       }).toList();
       print(b);
@@ -188,20 +246,24 @@ class _TfliteHomeState extends State<TfliteHome> {
       top: 0.0,
       left: 0.0,
       width: size.width,
-      child: _image == null ? SafeArea(
-        child: Row(
-          children:<Widget> [
-            const SizedBox(width: 20,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Please click an image",
-                style: TextStyle(fontSize: 20, color: Colors.black),
+      child: _image == null
+          ? SafeArea(
+              child: Row(
+                children: <Widget>[
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Please click an image",
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ),
+                ],
               ),
-              ),
-          ],
-        ),
-        )
-       : Image.file(_image),
+            )
+          : Image.file(_image),
     ));
 
     stackChildren.addAll(renderBoxes(size));
@@ -221,30 +283,34 @@ class _TfliteHomeState extends State<TfliteHome> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: <Widget>[
-            SizedBox(width: MediaQuery.of(context).size.width*0.22),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.22),
             FloatingActionButton(
               child: Icon(Icons.add_a_photo),
               tooltip: "Capture image from camera",
               onPressed: selectFromImagePicker,
             ),
-            const SizedBox(width: 30,),
+            const SizedBox(
+              width: 30,
+            ),
             FloatingActionButton(
               child: Icon(Icons.add),
               tooltip: "Pick Image from gallery",
               onPressed: selectFromGallery,
             ),
-            const SizedBox(width: 30,),
+            const SizedBox(
+              width: 30,
+            ),
             FloatingActionButton(
-          child: Text("Next"),
-          tooltip: "Go Next",
-          onPressed: (){
-            List<String> ingr = nextWidget();
-            Navigator.push(
-              context, 
-            MaterialPageRoute(
-              builder: (context)=>Search(ingr.join(","))));
-          },
-         ),
+              child: Text("Next"),
+              tooltip: "Go Next",
+              onPressed: () {
+                List<String> ingr = nextWidget();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Search(ingr.join(","))));
+              },
+            ),
           ],
         ),
       ),
