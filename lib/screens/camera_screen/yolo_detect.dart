@@ -82,7 +82,7 @@ class _TfliteHomeState extends State<TfliteHome> {
     print(base64Image.substring(0, 20));
     // String response = postRequest(ext, base64Image).toString();
     print("%%%%%%%%%%%%%%%%");
-    String response = postRequest(ext, base64Image).toString();
+    String response = await postRequest(ext, base64Image);
     // String response='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';
     // String response=base64Image;
     print("%%%%%%%%%%%%%%%%");
@@ -90,9 +90,9 @@ class _TfliteHomeState extends State<TfliteHome> {
     // Image(base64Decode('${response["imString"]}'));
     final dec = base64Decode(response);
     final directory = await getApplicationDocumentsDirectory();
-    var file = File('${directory.path}/testImage.png');    
+    var file = File('${directory.path}/testImage.jpg');
     file.writeAsBytesSync(dec);
-    // Image.file(file);    
+    // Image.file(file);
     predictImage(file);
   }
 
@@ -112,7 +112,7 @@ class _TfliteHomeState extends State<TfliteHome> {
     List<int> imageBytes = imagefile.readAsBytesSync();
     // print(imageBytes);
     String base64Image = base64Encode(imageBytes);
-    String response = postRequest(ext, base64Image).toString();
+    String response = await postRequest(ext, base64Image);
     // String response='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';
     // String response=base64Image;
     print("%%%%%%%%%%%%%%%%");
@@ -120,9 +120,9 @@ class _TfliteHomeState extends State<TfliteHome> {
     // Image(base64Decode('${response["imString"]}'));
     final dec = base64Decode(response);
     final directory = await getApplicationDocumentsDirectory();
-    var file = File('${directory.path}/testImage.png');    
+    var file = File('${directory.path}/testImage.jpg');
     file.writeAsBytesSync(dec);
-    // Image.file(file);    
+    // Image.file(file);
     predictImage(file);
   }
 
@@ -152,7 +152,7 @@ class _TfliteHomeState extends State<TfliteHome> {
 
   Future<String> postRequest(String ext, String base64) async {
     print('*****Call to function postRequest*********');
-    String url = 'http://192.168.139.121:5000/detect';
+    String url = 'http://192.168.29.79:5000/detect';
 
     Map data = {"base64": base64, "type": ext};
     //encode Map to JSON
@@ -166,7 +166,7 @@ class _TfliteHomeState extends State<TfliteHome> {
     print(temp);
     print(temp['imString']);
     setState(() {
-      String detectedfoods='${temp['foods']}';      
+      String detectedfoods = '${temp['foods']}';
       _detectedFoods = detectedfoods.split('_');
     });
     return '${temp['imString']}';
@@ -247,7 +247,7 @@ class _TfliteHomeState extends State<TfliteHome> {
     //   }).toList();
     //   print(b);
     // }
-    b=_detectedFoods;
+    b = _detectedFoods;
     print(b);
     return b;
   }
@@ -336,7 +336,6 @@ class _TfliteHomeState extends State<TfliteHome> {
     );
   }
 }
-
 
 // import 'dart:io';
 
@@ -491,7 +490,7 @@ class _TfliteHomeState extends State<TfliteHome> {
 //   }
 
 //   List<String> nextWidget(){
-//     List<String> b=[];   
+//     List<String> b=[];
 //     if(_recognitions!=null)
 //     {
 //       _recognitions.map((re) {
@@ -502,7 +501,7 @@ class _TfliteHomeState extends State<TfliteHome> {
 //       }).toList();
 //       print(b);
 //     }
-    
+
 //     return b;
 //   }
 
@@ -544,7 +543,7 @@ class _TfliteHomeState extends State<TfliteHome> {
 //       appBar: AppBar(
 //         title: Text("TFLite Demo"),
 //         centerTitle: true,
-//       ),      
+//       ),
 //       body: Row(
 //         children: [
 //          FloatingActionButton(
@@ -558,7 +557,7 @@ class _TfliteHomeState extends State<TfliteHome> {
 //           onPressed: (){
 //             List<String> ingr = nextWidget();
 //             Navigator.push(
-//               context, 
+//               context,
 //             MaterialPageRoute(
 //               builder: (context)=>Search(ingr.join(","))));
 //           },
@@ -571,4 +570,3 @@ class _TfliteHomeState extends State<TfliteHome> {
 //     );
 //   }
 // }
-
