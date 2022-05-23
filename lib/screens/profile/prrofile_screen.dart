@@ -14,14 +14,17 @@ class ProfileScreen extends StatelessWidget {
   String email;
   @override
   Widget build(BuildContext context) {
+    print("Start of prrofile_screen.dart");
     SizeConfig().init(context);
     User user = _auth.currentUser;
+    print(user);
     if (user != null)  {
       name = user.displayName;
       email = user.email;
       print("########"+name);
       print("########"+email);
     }
+    print("End of prrofile_screen.dart");
     return Scaffold(
       appBar: buildAppBar(context),
       body: Body(name:name,email:email),

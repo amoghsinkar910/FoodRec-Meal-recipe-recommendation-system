@@ -13,6 +13,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Start of body.dart");
+    print("${this.name} ${this.email}");
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
