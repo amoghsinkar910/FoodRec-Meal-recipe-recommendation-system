@@ -5,14 +5,26 @@ import 'package:recipe_app/constants.dart';
 import 'package:recipe_app/screens/profile/components/body.dart';
 import 'package:recipe_app/screens/profile/components/edit_profile.dart';
 import 'package:recipe_app/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
+  String name;
+  String email;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    User user = _auth.currentUser;
+    if (user != null)  {
+      name = user.displayName;
+      email = user.email;
+      print("########"+name);
+      print("########"+email);
+    }
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(),
+      body: Body(name:name,email:email),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
@@ -28,7 +40,8 @@ class ProfileScreen extends StatelessWidget {
         FlatButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => EditProfile()));
+              MaterialPageRoute(builder: (context) => EditProfile())
+            );
           },
           child: Text(
             "Edit",

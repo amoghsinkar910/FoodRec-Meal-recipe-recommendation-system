@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/components/my_bottom_nav_bar.dart';
 import 'package:recipe_app/constants.dart';
 import 'package:recipe_app/screens/profile/components/body.dart';
+import 'package:recipe_app/screens/profile/components/edit_firebase.dart';
 import 'package:recipe_app/size_config.dart';
 
 class EditProfile extends StatelessWidget {
@@ -12,7 +13,7 @@ class EditProfile extends StatelessWidget {
     SizeConfig().init(context);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: EditForm(),
+      body: EditFirebase(),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
@@ -20,46 +21,16 @@ class EditProfile extends StatelessWidget {
   AppBar buildAppBar(context) {
     return AppBar(
       backgroundColor: BlueColor,
-      leading: SizedBox(),
+      elevation: 0,
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.green),
+          onPressed: () {
+            // passing this to our root
+            Navigator.of(context).pop();
+          },
+        ),
       centerTitle: true,
-      title: Text("Profile"),
+      title: Text("Update Profile"),
     );
-  }
-
-  Widget EditForm() {
-    double defaultSize = SizeConfig.defaultSize;
-    return SizedBox(
-      height: defaultSize * 24, // 240
-      child: Stack(
-        children: <Widget>[
-          ClipPath(
-            clipper: CustomShape(),
-            child: Container(
-              height: defaultSize * 15, //150
-              color: BlueColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CustomShape extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    double height = size.height;
-    double width = size.width;
-    path.lineTo(0, height - 100);
-    path.quadraticBezierTo(width / 2, height, width, height - 100);
-    path.lineTo(width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
   }
 }
