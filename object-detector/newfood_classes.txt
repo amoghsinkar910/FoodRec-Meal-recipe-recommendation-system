@@ -1,0 +1,23 @@
+- Apple
+- Banana
+- Bread
+- Cabbage
+- Carrot
+- Cheese
+- Cucumber
+- Egg
+- Grape
+- Lemon
+- Mango
+- Milk
+- Orange
+- Pear
+- Pineapple
+- Pomegranate
+- Potato
+- Radish
+- Strawberry
+- Tomato
+- Watermelon
+
+nc = 21
