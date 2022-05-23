@@ -66,39 +66,7 @@ class IndianRecipeDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: <Widget>[
-            CategoryList(),
-            RecipeCard(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: MyBottomNavBar(),
-    );
-  }
-
-  AppBar buildAppBar(BuildContext context) {
-    return AppBar(
-      iconTheme: IconThemeData(color: Colors.black),
-      centerTitle: true,
-      title: Image.asset("assets/images/logo.png"),
-      actions: <Widget>[
-        IconButton(
-          icon: SvgPicture.asset("assets/icons/search.svg"),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> SearchScreen()));
-          },
-        ),
-        SizedBox(
-          // It means 5 because by out defaultSize = 10
-          width: SizeConfig.defaultSize * 0.5,
-        )
-      ],
-    );
+    return RecipeCard();
   }
 }
 

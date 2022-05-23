@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/screens/home/components/indian_card.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:recipe_app/screens/home/indian_click_screen.dart';
 
+import '../all_recipe_click.dart';
+
 // Our Category List need StateFullWidget
 // I can use Provider on it, Then we dont need StatefulWidget
 
+
+final categoryWidgets=[AllDisplay(),IndianRecipeDisplay()];
 class Categories extends StatefulWidget {
   @override
   _CategoriesState createState() => _CategoriesState();
@@ -18,16 +23,22 @@ class _CategoriesState extends State<Categories> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 2),
-      child: SizedBox(
-        height: SizeConfig.defaultSize * 3.5, // 35
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
-          itemBuilder: (context, index) => buildCategoriItem(index),
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 2),
+          child: SizedBox(
+            height: SizeConfig.defaultSize * 3.5, // 35
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: categories.length,
+              itemBuilder: (context, index) => buildCategoriItem(index),
+            ),
+          ),
         ),
-      ),
+        categoryWidgets[selectedIndex],
+      ],
     );
   }
 
@@ -36,15 +47,7 @@ class _CategoriesState extends State<Categories> {
       onTap: () {
         setState(() {
           selectedIndex = index;
-        });
-        if(index==1)
-        {
-          Navigator.push(
-          context,  
-          MaterialPageRoute(builder: (context) => IndianRecipeDisplay())
-          );
-        }
-        
+        });        
       },
       child: Container(
         alignment: Alignment.center,
