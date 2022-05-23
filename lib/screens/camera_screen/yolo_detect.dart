@@ -161,7 +161,8 @@ class _TfliteHomeState extends State<TfliteHome> {
 
   Future<String> postRequest(String ext, String base64) async {
     print('*****Call to function postRequest*********');
-    String url = 'http://192.168.141.121:5000/detect';
+    // String url = 'http://192.168.141.121:5000/detect';
+    String url = 'http://192.168.18.121:5000/detect';
 
     Map data = {"base64": base64, "type": ext};
     //encode Map to JSON

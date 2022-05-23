@@ -8,6 +8,8 @@ import 'package:recipe_app/screens/login/login_screen.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 import 'package:recipe_app/size_config.dart';
 
+import '../../recipe_search/screen/first_screen.dart';
+
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -72,7 +74,7 @@ class HomeScreen extends StatelessWidget {
           ],    
         ),
       ),
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: Body(),
       // We are not able to BottomNavigationBar because the icon parameter dont except SVG
       // We also use Provied to manage the state of our Nav
@@ -80,7 +82,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       // leading: IconButton(
       //   icon: SvgPicture.asset("assets/icons/menu.svg"),
@@ -93,7 +95,9 @@ class HomeScreen extends StatelessWidget {
       actions: <Widget>[
         IconButton(
           icon: SvgPicture.asset("assets/icons/search.svg"),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> SearchScreen()));
+          },
         ),
         SizedBox(
           // It means 5 because by out defaultSize = 10

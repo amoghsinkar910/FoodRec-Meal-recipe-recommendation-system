@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import 'package:recipe_app/screens/home/indian_click_screen.dart';
 
 // Our Category List need StateFullWidget
 // I can use Provider on it, Then we dont need StatefulWidget
@@ -36,6 +37,14 @@ class _CategoriesState extends State<Categories> {
         setState(() {
           selectedIndex = index;
         });
+        if(index==1)
+        {
+          Navigator.push(
+          context,  
+          MaterialPageRoute(builder: (context) => IndianRecipeDisplay())
+          );
+        }
+        
       },
       child: Container(
         alignment: Alignment.center,

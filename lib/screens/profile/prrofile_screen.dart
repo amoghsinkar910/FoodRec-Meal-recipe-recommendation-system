@@ -1,7 +1,9 @@
+// import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:recipe_app/components/my_bottom_nav_bar.dart';
 import 'package:recipe_app/constants.dart';
 import 'package:recipe_app/screens/profile/components/body.dart';
+import 'package:recipe_app/screens/profile/components/edit_profile.dart';
 import 'package:recipe_app/size_config.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -9,13 +11,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: Body(),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(context) {
     return AppBar(
       backgroundColor: BlueColor,
       leading: SizedBox(),
@@ -24,7 +26,10 @@ class ProfileScreen extends StatelessWidget {
       title: Text("Profile"),
       actions: <Widget>[
         FlatButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => EditProfile()));
+          },
           child: Text(
             "Edit",
             style: TextStyle(
