@@ -4,14 +4,23 @@ import 'package:recipe_app/screens/home/components/indian_card.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:recipe_app/screens/home/indian_click_screen.dart';
+import 'chinese_card.dart';
+import 'italian_card.dart';
+import 'mexican_card.dart';
 
 import '../all_recipe_click.dart';
 
 // Our Category List need StateFullWidget
 // I can use Provider on it, Then we dont need StatefulWidget
 
+final categoryWidgets = [
+  AllDisplay(),
+  IndianRecipeDisplay(),
+  Italian(),
+  Mexican(),
+  Chinese()
+];
 
-final categoryWidgets=[AllDisplay(),IndianRecipeDisplay()];
 class Categories extends StatefulWidget {
   @override
   _CategoriesState createState() => _CategoriesState();
@@ -47,7 +56,7 @@ class _CategoriesState extends State<Categories> {
       onTap: () {
         setState(() {
           selectedIndex = index;
-        });        
+        });
       },
       child: Container(
         alignment: Alignment.center,

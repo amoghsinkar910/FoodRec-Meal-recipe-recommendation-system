@@ -4,23 +4,22 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../../models/IndianRecipes.dart';
-import '../../../recipe_search/model.dart';
 import '../../../recipe_search/RecipeView.dart';
+import '../../../recipe_search/model.dart';
+import '../../../size_config.dart';
 
-class RecipeCard extends StatefulWidget {
-
+class Mexican extends StatefulWidget {
   @override
-  State<RecipeCard> createState() => _RecipeCardState();
+  _MexicanState createState() => _MexicanState();
 }
 
-class _RecipeCardState extends State<RecipeCard> {
-
+class _MexicanState extends State<Mexican> {
   bool isLoading = true;
   List<RecipeModel> recipeList = <RecipeModel>[];
   
   getRecipes() async {
     String url =
-        "https://api.edamam.com/search?q=indian&app_id=05197bfe&app_key=c6660c6d1516b97f1ff8402daf6430fa";
+        "https://api.edamam.com/search?q=mexican&app_id=05197bfe&app_key=c6660c6d1516b97f1ff8402daf6430fa";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
@@ -51,6 +50,7 @@ class _RecipeCardState extends State<RecipeCard> {
   
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
