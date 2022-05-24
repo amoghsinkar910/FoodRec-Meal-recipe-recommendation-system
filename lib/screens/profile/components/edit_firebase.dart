@@ -24,6 +24,9 @@ class _EditFirebaseState extends State<EditFirebase> {
   final emailEditingController = new TextEditingController();
   String errorMessage;
   double defaultSize = SizeConfig.defaultSize;
+  String fname1;
+  String sname1;
+  String email1;
 
   @override
   Widget build(BuildContext context) {
@@ -183,15 +186,21 @@ class _EditFirebaseState extends State<EditFirebase> {
     if (_formKey.currentState.validate()) {
       try {
         CollectionReference users = FirebaseFirestore.instance.collection('users');
-        User user = _auth.currentUser;
+        final fireUser = FirebaseAuth.instance.currentUser;
+        //fetch();
         await users
-            .doc(user.uid)
+            .doc(fireUser.uid)
             .update({
               'email': email,
               'firstName': firstName,
               'secondName': secondName,
             })
-            .then((value) => print("User profile updated"))
+            .then((value) {print("User profile updated");
+            Navigator.pushAndRemoveUntil(
+            (context),
+            MaterialPageRoute(builder: (context) => ProfileScreen()),
+            (route) => false);
+            })
             .catchError((e) {
           Fluttertoast.showToast(msg: e.message);
         });
@@ -228,6 +237,25 @@ class _EditFirebaseState extends State<EditFirebase> {
       }
     }
   } 
+
+  void fetch() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if(firebaseUser!=null)
+    {
+      await FirebaseFirestore.instance
+      .collection('users')
+      .doc(firebaseUser.uid)
+      .get()
+      .then((ds) {
+        fname1 = ds.data()['firstName'];
+        sname1 = ds.data()['secondName'];
+        email1 = ds.data()['email'];
+      })
+      .catchError((e){
+        print(e);
+      });
+    }
+  }
 }
 
   

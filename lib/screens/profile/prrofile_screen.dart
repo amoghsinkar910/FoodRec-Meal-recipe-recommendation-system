@@ -12,18 +12,21 @@ class ProfileScreen extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   String name;
   String email;
+  String myemail;
   @override
   Widget build(BuildContext context) {
     print("Start of prrofile_screen.dart");
     SizeConfig().init(context);
     User user = _auth.currentUser;
-    print(user);
-    if (user != null)  {
-      name = user.displayName;
-      email = user.email;
-      print("########"+name);
-      print("########"+email);
-    }
+    fetch();
+    //user.reload();
+    //print(user);
+    // if (user != null)  {
+    //   user.displayName==null?name="Amogh":name=user.displayName;
+    //   email = user.email;
+    //   print("########"+name);
+    //   print("########"+email);
+    // }
     print("End of prrofile_screen.dart");
     return Scaffold(
       appBar: buildAppBar(context),
@@ -57,5 +60,25 @@ class ProfileScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void fetch() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    if(firebaseUser!=null)
+    {
+      await FirebaseFirestore.instance
+      .collection('users')
+      .doc(firebaseUser.uid)
+      .get()
+      .then((ds) {
+        print("FETCHED################");
+
+        print(ds.data());
+        print(ds.data());
+        })
+      .catchError((e){
+        print(e);
+      });
+    }
   }
 }
