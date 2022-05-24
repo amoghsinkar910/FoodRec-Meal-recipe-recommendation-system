@@ -5,6 +5,8 @@ import 'package:recipe_app/screens/home/components/recipe_card.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 import 'package:recipe_app/size_config.dart';
 
+import '../../recipe_search/screen/first_screen.dart';
+
 class RecipeDisplay extends StatelessWidget {
   //List<String> menutexts = ["Home","Search Recipes","Click photo","Favourites", "Contact us"];
   @override

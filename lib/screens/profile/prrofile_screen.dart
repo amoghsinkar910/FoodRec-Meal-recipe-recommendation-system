@@ -8,17 +8,33 @@ import 'package:recipe_app/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final _auth = FirebaseAuth.instance;
-  String name;
-  String email;
+
+  bool isLoading = true;
+
+  String _name;
+
+  String _email;
+
   String myemail;
+
+  void initState()
+  {
+    super.initState();
+    fetch();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("Start of prrofile_screen.dart");
     SizeConfig().init(context);
-    User user = _auth.currentUser;
-    fetch();
+    //User user = _auth.currentUser;
     //user.reload();
     //print(user);
     // if (user != null)  {
@@ -28,9 +44,15 @@ class ProfileScreen extends StatelessWidget {
     //   print("########"+email);
     // }
     print("End of prrofile_screen.dart");
+    if(isLoading)
+    {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Body(name:name,email:email),
+      body: Body(name:_name,email:_email),
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
@@ -62,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void fetch() async {
+  Future fetch() async {
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if(firebaseUser!=null)
     {
@@ -74,7 +96,12 @@ class ProfileScreen extends StatelessWidget {
         print("FETCHED################");
 
         print(ds.data());
-        print(ds.data());
+        setState(() {
+          _name = ds.data()['firstName'] + ds.data()['secondName'];
+          _email = ds.data()['email'];
+          isLoading = false;
+        });
+        
         })
       .catchError((e){
         print(e);

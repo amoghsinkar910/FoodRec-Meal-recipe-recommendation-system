@@ -185,6 +185,7 @@ class _EditFirebaseState extends State<EditFirebase> {
   Future<void> updateFirestore(String firstName, String secondName,String email) async {
     if (_formKey.currentState.validate()) {
       try {
+        print("Start of updateFirestore");
         CollectionReference users = FirebaseFirestore.instance.collection('users');
         final fireUser = FirebaseAuth.instance.currentUser;
         //fetch();
@@ -195,11 +196,12 @@ class _EditFirebaseState extends State<EditFirebase> {
               'firstName': firstName,
               'secondName': secondName,
             })
-            .then((value) {print("User profile updated");
-            Navigator.pushAndRemoveUntil(
-            (context),
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
-            (route) => false);
+            .then((value) {
+              print("User profile updated");
+              Navigator.pushAndRemoveUntil(
+              (context),
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
+              (route) => false);
             })
             .catchError((e) {
           Fluttertoast.showToast(msg: e.message);

@@ -19,7 +19,7 @@ final allDisplayWidgets= [
   RecipeDisplay(),
   Best(),  
   FoodCourt(),  
-]
+];
 
 
 class AllDisplay extends StatelessWidget {
