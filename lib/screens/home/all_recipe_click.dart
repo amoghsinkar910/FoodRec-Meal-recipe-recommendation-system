@@ -11,7 +11,15 @@ import 'package:recipe_app/screens/login/login_screen.dart';
 import 'package:recipe_app/screens/profile/prrofile_screen.dart';
 import 'package:recipe_app/size_config.dart';
 import 'package:recipe_app/models/RecipeBundel.dart';
+import 'best_click_screen.dart';
 import 'components/recipe_bundel_card.dart';
+import 'food_court_click_screen.dart';
+
+final allDisplayWidgets= [
+  RecipeDisplay(),
+  Best(),  
+  FoodCourt(),  
+]
 
 
 class AllDisplay extends StatelessWidget {
@@ -38,7 +46,7 @@ class AllDisplay extends StatelessWidget {
                   press: () {
                     //routing
                     Navigator.push(context, 
-                      MaterialPageRoute(builder: (context) => RecipeDisplay()));
+                      MaterialPageRoute(builder: (context) => allDisplayWidgets[index]));
                   },
                 ),
               ),
