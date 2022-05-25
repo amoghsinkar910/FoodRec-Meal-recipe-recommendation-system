@@ -21,7 +21,7 @@ class _SearchState extends State<Search> {
   List reciptCatList = [{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"},{"imgUrl": "https://images.unsplash.com/photo-1593560704563-f176a2eb61db", "heading": "Chilli Food"}];
   getRecipes(String query) async {
     String url =
-        "https://api.edamam.com/search?q=$query&app_id=05197bfe&app_key=c6660c6d1516b97f1ff8402daf6430fa";
+        "http://localhost:5000/reco";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
