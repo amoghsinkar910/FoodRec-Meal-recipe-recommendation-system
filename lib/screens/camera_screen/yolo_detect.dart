@@ -161,7 +161,9 @@ class _TfliteHomeState extends State<TfliteHome> {
 
   Future<String> postRequest(String ext, String base64) async {
     print('*****Call to function postRequest*********');
-    String url = 'http://192.168.141.121:5000/detect';
+    // String url = 'http://192.168.141.121:5000/detect';
+    // String url = 'http://192.168.10.121:5000/detect';
+    String url = 'http://10.0.0.216:5000/detect';
 
     Map data = {"base64": base64, "type": ext};
     //encode Map to JSON
@@ -333,7 +335,12 @@ class _TfliteHomeState extends State<TfliteHome> {
             FloatingActionButton(
               child: Text("Next"),
               tooltip: "Go Next",
-              onPressed: () {
+              onPressed: () async {
+                final directory = await getApplicationDocumentsDirectory();
+                for (var i=0;i<=_count-1;i++){
+                  var file = File('${directory.path}/testImage${i}.jpg');
+                  file.delete();
+                }
                 List<String> ingr = nextWidget();
                 Navigator.push(
                     context,
